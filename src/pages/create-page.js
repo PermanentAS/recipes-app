@@ -135,7 +135,6 @@ class CreatePage extends Component {
                 name="title"
                 id="title"
                 value={form.title}
-                placeholder="with a placeholder"
                 onChange={this.setField}
               />
             </FormGroup>
