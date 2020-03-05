@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     const { _id } = req.query;
 
     if (!_id) {
-      const resp = await Recipe.find().sort({ date: 1 });
+      const resp = await Recipe.find().sort({ date: -1 });
       return res.status(200).json(resp);
     }
 
@@ -48,7 +48,7 @@ router.post(
 
       const { title, text } = req.body;
       const { _id } = req.query;
-      const date = moment().format("DD/MM/YYYY");
+      const date = moment();
 
       if (_id) {
         const candidate = await Recipe.findOne({ _id });
