@@ -8,6 +8,7 @@ import {
   CardSubtitle,
   Button
 } from "reactstrap";
+import moment from "moment";
 import "./recipe-card.scss";
 
 const RecipeCard = ({
@@ -43,7 +44,7 @@ const RecipeCard = ({
           </CardTitle>
           <CardSubtitle>
             <strong>Date: </strong>
-            {date}
+            {moment(date).format("DD/MM/YYYY LT")}
           </CardSubtitle>
           <CardText>
             <strong>Recipe: </strong>

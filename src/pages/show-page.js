@@ -5,6 +5,7 @@ import Header from "./../components/header";
 import Footer from "./../components/footer";
 import Loader from "./../components/loader";
 import Axios from "axios";
+import moment from "moment";
 
 const ShowPage = () => {
   const [recipe, setRecipe] = useState({});
@@ -45,7 +46,7 @@ const ShowPage = () => {
           </div>
           <div className="content p-5">
             <p>
-              <strong>Date:</strong> {recipe.date}
+              <strong>Date:</strong> {moment(recipe.date).format("DD/MM/YYYY LT")}
             </p>
             <p>
               <strong>Recipe:</strong> {recipe.text}
@@ -83,7 +84,7 @@ const ShowPage = () => {
                         <strong>Title:</strong> {recipe.title}
                       </p>
                       <p>
-                        <strong>Date:</strong> {recipe.date}
+                        <strong>Date:</strong> {moment(recipe.date).format("DD/MM/YYYY LT")}
                       </p>
                       <p>
                         <strong>Recipe:</strong> {recipe.text}
