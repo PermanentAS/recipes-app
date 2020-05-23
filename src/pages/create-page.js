@@ -13,15 +13,15 @@ class CreatePage extends Component {
       form: {
         _id: "",
         title: "",
-        text: ""
+        text: "",
       },
       formErrors: {
         title: "",
         text: "",
-        serverError: ""
+        serverError: "",
       },
       isLoading: false,
-      error: ""
+      error: "",
     };
     this.controllers = {};
     this.signals = {};
@@ -37,13 +37,13 @@ class CreatePage extends Component {
     }
   }
 
-  fetchRecipe = _id => {
+  fetchRecipe = (_id) => {
     this.setState({ isLoading: true });
-    Axios.get(`/api/recipes/?_id=${_id}`)
-      .then(data => {
+    Axios.get(`/api/recipes/${_id}`)
+      .then((data) => {
         this.setState({ form: { ...data.data.recipe }, isLoading: false });
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e.response.data.message);
         this.props.history.push("/");
       });
@@ -54,13 +54,13 @@ class CreatePage extends Component {
       form: {
         ...this.state.form,
         ...{
-          [target.name]: target.value
-        }
+          [target.name]: target.value,
+        },
       },
       formErrors: {
         ...this.state.formErrors,
-        ...{ [target.name]: "", serverError: "" }
-      }
+        ...{ [target.name]: "", serverError: "" },
+      },
     });
   };
 
@@ -77,34 +77,65 @@ class CreatePage extends Component {
 
     this.setState({ formErrors: errors });
 
-    return Object.values(errors).every(text => !text);
+    return Object.values(errors).every((text) => !text);
   };
 
-  createRecipe = e => {
-    e.preventDefault();
-    const validateForm = this.validateFields();
+  createRecipe = () => {
     const { form } = this.state;
-    if (!validateForm) {
-      return null;
-    }
-    this.setState({ isLoading: true });
-    Axios.post(`/api/recipes/add${form._id ? `?_id=${form._id}` : ""}`, {
+
+    Axios.post(`/api/recipes/add`, {
       title: form.title,
-      text: form.text
+      text: form.text,
     })
       .then(() => {
         this.setState({ isLoading: false });
         this.props.history.push("/");
       })
-      .catch(e => {
+      .catch((e) => {
         this.setState({
           formErrors: {
             ...this.state.formErrors,
-            serverError: e.response.data.message
-          }
+            serverError: e.response.data.message,
+          },
         });
         this.setState({ isLoading: false });
       });
+  };
+
+  updateRecipe = () => {
+    const { form } = this.state;
+
+    Axios.put(`/api/recipes/update/${form._id}`, {
+      title: form.title,
+      text: form.text,
+    })
+      .then(() => {
+        this.setState({ isLoading: false });
+        this.props.history.push("/");
+      })
+      .catch((e) => {
+        this.setState({
+          formErrors: {
+            ...this.state.formErrors,
+            serverError: e.response.data.message,
+          },
+        });
+        this.setState({ isLoading: false });
+      });
+  };
+
+  createUpdateRecipe = (e) => {
+    e.preventDefault();
+    const validateForm = this.validateFields();
+    const { form } = this.state;
+
+    if (!validateForm) {
+      return null;
+    }
+    this.setState({ isLoading: true });
+    if (form._id) {
+      this.updateRecipe();
+    } else this.createRecipe();
   };
 
   abortCreating = () => {
@@ -157,7 +188,7 @@ class CreatePage extends Component {
               <Button
                 outline
                 color="primary"
-                onClick={this.createRecipe}
+                onClick={this.createUpdateRecipe}
                 disabled={isLoading}
               >
                 {form._id ? "Update" : "Create"}

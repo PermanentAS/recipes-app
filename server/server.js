@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 const PORT = config.get("port") || 3001;
+
 app.use(express.json({ extended: true }));
 
 app.use("/api/recipes", require("./routes/recipes.routes"));
@@ -13,7 +14,7 @@ const start = async () => {
     await mongoose.connect(config.get("mongoURI"), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
     });
 
     app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));

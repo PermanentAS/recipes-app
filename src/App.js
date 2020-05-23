@@ -1,7 +1,7 @@
 import React from "react";
 import MainPage from "./pages/main-page";
 import CreatePage from "./pages/create-page";
-import ShowPage from "./pages/show-page"
+import ShowPage from "./pages/show-page";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.scss";
@@ -15,6 +15,9 @@ function App() {
             <MainPage />
           </Route>
           <Route path="/create">
+            <CreatePage />
+          </Route>
+          <Route path="/update/:_id">
             <CreatePage />
           </Route>
           <Route path="/show/:_id">
