@@ -14,7 +14,7 @@ const MainPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    Axios.get(`/api/recipes/`).then(data => {
+    Axios.get(`/api/recipes/`).then((data) => {
       setRecipes(data.data);
       setLoading(false);
     });
@@ -24,18 +24,18 @@ const MainPage = () => {
     history.push("/create");
   };
 
-  const deleteRecipe = _id => {
+  const deleteRecipe = (_id) => {
     setDeleting(true);
-    Axios.delete(`/api/recipes/delete?_id=${_id}`).then(() => {
+    Axios.delete(`/api/recipes/delete/${_id}`).then(() => {
       setDeleting(false);
     });
   };
 
-  const updateRecipe = _id => {
-    history.push(`/create/${_id}`);
+  const updateRecipe = (_id) => {
+    history.push(`/update/${_id}`);
   };
 
-  const showRecipe = _id => {
+  const showRecipe = (_id) => {
     history.push(`/show/${_id}`);
   };
 

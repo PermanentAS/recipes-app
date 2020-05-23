@@ -17,19 +17,19 @@ const ShowPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    Axios.get(`/api/recipes/?_id=${_id}`).then(data => {
+    Axios.get(`/api/recipes/${_id}`).then((data) => {
       setRecipe(data.data.recipe);
       setRecipeHistory(data.data.history);
       setLoading(false);
     });
   }, [_id]);
 
-  const redirectTo = url => {
+  const redirectTo = (url) => {
     history.push(url);
   };
 
-  const deleteRecipe = _id => {
-    Axios.delete(`/api/recipes/delete?_id=${_id}`).then(() => {
+  const deleteRecipe = (_id) => {
+    Axios.delete(`/api/recipes/delete/${_id}`).then(() => {
       redirectTo("/");
     });
   };
@@ -46,7 +46,8 @@ const ShowPage = () => {
           </div>
           <div className="content p-5">
             <p>
-              <strong>Date:</strong> {moment(recipe.date).format("DD/MM/YYYY LT")}
+              <strong>Date:</strong>{" "}
+              {moment(recipe.date).format("DD/MM/YYYY LT")}
             </p>
             <p>
               <strong>Recipe:</strong> {recipe.text}
@@ -63,7 +64,7 @@ const ShowPage = () => {
             <Button
               outline
               color="info"
-              onClick={() => redirectTo(`/create/${_id}`)}
+              onClick={() => redirectTo(`/update/${_id}`)}
             >
               Update
             </Button>
@@ -77,14 +78,15 @@ const ShowPage = () => {
           {showHistory ? (
             <div className="history">
               {recipeHistory.length ? (
-                recipeHistory.map(recipe => {
+                recipeHistory.map((recipe) => {
                   return (
                     <div className="content m-5 p-2" key={recipe._id}>
                       <p>
                         <strong>Title:</strong> {recipe.title}
                       </p>
                       <p>
-                        <strong>Date:</strong> {moment(recipe.date).format("DD/MM/YYYY LT")}
+                        <strong>Date:</strong>{" "}
+                        {moment(recipe.date).format("DD/MM/YYYY LT")}
                       </p>
                       <p>
                         <strong>Recipe:</strong> {recipe.text}
