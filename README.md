@@ -3,9 +3,7 @@
 # Binary studio test task
 
 
-Start project:
-1. run server `npm run server`
-2. run app `npm run start`
+#### Start project using `npm run dev`
 
 ## General description
 You need to write a simple Cookbook JavaScript application. The application is basically a list of
